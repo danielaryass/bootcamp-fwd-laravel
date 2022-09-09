@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('appointment', function (Blueprint $table) {
-            $table->foreign('doctor_id', 'fk_appointment_to_doctor')->reference('id')->on('doctor')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->foreign('user_id','fk_appointment_to_users')->reference('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->foreign('consultation_id','fk_appointment_to_consultation')->reference('id')->on('consultation')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('doctor_id', 'fk_appointment_to_doctor')->references('id')->on('doctor')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('user_id','fk_appointment_to_users')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('consultation_id','fk_appointment_to_consultation')->references('id')->on('consultation')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 
