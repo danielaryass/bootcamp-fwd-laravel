@@ -28,4 +28,9 @@ class Specialist extends Model
     'deleted_at',
 
     ];
+      public function doctor()
+    {
+        //3 parameters (path model,field foreign key, field primary key from table hasMany/hasone)
+        return $this->hasMany('App\Models\Operational\Doctor','specialist_id');
+    }
 }

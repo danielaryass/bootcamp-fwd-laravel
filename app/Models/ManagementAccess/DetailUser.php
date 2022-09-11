@@ -33,4 +33,14 @@ class DetailUser extends Model
     'deleted_at',
 
     ];
+      public function type_user()
+    {
+        //3 parameters (path model,field foreign key, field primary key from table hasMany/hasone)
+        return $this->belongsTo('App\Models\MasterData\TypeUser','type_user_id','id');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User','user_id','id');
+    }
 }

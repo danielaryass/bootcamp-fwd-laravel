@@ -9,11 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
-    use HasFactory;
+    // use HasFactory
+    use SoftDeletes;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
@@ -41,6 +43,7 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
+    
     /**
      * The attributes that should be cast.
      *
@@ -49,7 +52,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    
     /**
      * The accessors to append to the model's array form.
      *
@@ -58,4 +61,19 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function appointment()
+    {
+        return $this->hasMany('App\Models\Operational\Appointment', 'user_id');
+    }
+    
+    public function role_user()
+    {
+        return $this->hasMany('App\Models\ManagementAccess\RoleUser','user_id');
+    }
+
+    public function detail_user()
+    {
+        return $this->hasOne('App\Models\ManagementAccess\UserDetail', 'user_id');
+    }
 }
