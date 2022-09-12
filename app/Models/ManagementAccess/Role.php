@@ -33,6 +33,6 @@ class Role extends Model
     }
     public function role_user()
     {
-        return $this->hasMany('App\Models\Operational\RoleUser','role_id');
+        return $this->hasMany('App\Models\ManagementAccess\RoleUser','role_id');
     }
 }
