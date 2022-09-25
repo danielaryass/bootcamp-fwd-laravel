@@ -28,11 +28,7 @@ class LandingController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //Middleware
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
 
     public function index()
