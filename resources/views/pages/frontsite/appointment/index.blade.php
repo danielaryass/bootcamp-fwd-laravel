@@ -131,39 +131,33 @@
             </div>
         </div>
     </div>
-    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-        class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100" role="menuitem" tabindex="-1"
-        id="user-menu-item-2"> Sign out
 
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-        <!-- End Content -->
+    <!-- End Content -->
 
 
-        @push('after-style')
-            <link rel="stylesheet" href="{{ url('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css') }}" />
-        @endpush
+    @push('after-style')
+        <link rel="stylesheet" href="{{ url('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css') }}" />
+    @endpush
 
-        @push('after-script')
-            <script src="{{ url('https://cdn.jsdelivr.net/npm/flatpickr') }}"></script>
+    @push('after-script')
+        <script src="{{ url('https://cdn.jsdelivr.net/npm/flatpickr') }}"></script>
 
-            <script>
-                // Date Picker
-                const fpDate = flatpickr("#date", {
-                    altInput: true,
-                    altFormat: "j F Y",
-                    dateFormat: "Y-m-d",
-                    disableMobile: "true",
-                });
+        <script>
+            // Date Picker
+            const fpDate = flatpickr("#date", {
+                altInput: true,
+                altFormat: "j F Y",
+                dateFormat: "Y-m-d",
+                disableMobile: "true",
+            });
 
-                // Time Picker
-                const fpTime = flatpickr("#time", {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i K",
-                    disableMobile: "true",
-                });
-            </script>
-        @endpush
-    @endsection
+            // Time Picker
+            const fpTime = flatpickr("#time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i K",
+                disableMobile: "true",
+            });
+        </script>
+    @endpush
+@endsection
