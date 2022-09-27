@@ -6,7 +6,7 @@
         <div class="lg:max-w-7xl lg:flex items-center mx-auto px-4 lg:px-14 pt-6 py-20 lg:py-24 gap-x-24">
             <!-- Detail Doctor  -->
             <div class="lg:w-5/12 lg:border-r h-72 lg:h-[30rem] flex flex-col items-center justify-center text-center">
-                <img src="../assets/images/doctor-1.png"
+                <img src="{{ asset('/assets/frontsite/images/doctor-1.png') }}"
                     class="inline-block w-32 h-32 rounded-full bg-center object-cover object-top" alt="doctor-1" />
                 <div class="text-[#1E2B4F] text-lg font-semibold mt-4">
                     Dr. Galih Pratama
@@ -124,12 +124,46 @@
                     </label>
 
                     <div class="grid">
-                        <a href="subject-consultation-payment.html"
+                        <a href="{{ route('payment.index') }}"
                             class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Continue</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- End Content -->
-@endsection
+    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+        class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100" role="menuitem" tabindex="-1"
+        id="user-menu-item-2"> Sign out
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+        <!-- End Content -->
+
+
+        @push('after-style')
+            <link rel="stylesheet" href="{{ url('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css') }}" />
+        @endpush
+
+        @push('after-script')
+            <script src="{{ url('https://cdn.jsdelivr.net/npm/flatpickr') }}"></script>
+
+            <script>
+                // Date Picker
+                const fpDate = flatpickr("#date", {
+                    altInput: true,
+                    altFormat: "j F Y",
+                    dateFormat: "Y-m-d",
+                    disableMobile: "true",
+                });
+
+                // Time Picker
+                const fpTime = flatpickr("#time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i K",
+                    disableMobile: "true",
+                });
+            </script>
+        @endpush
+    @endsection
