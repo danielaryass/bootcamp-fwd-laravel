@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+    @include('sweetalert::alert')
     @yield('content')
 
     @stack('before-script')

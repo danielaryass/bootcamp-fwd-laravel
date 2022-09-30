@@ -68,7 +68,8 @@
                                         <div class="text-sm text-[#AFAEC3]">Pasien</div>
                                     </div>
                                     <img class="h-12 w-12 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
-                                        src="/src/assets/images/authenticated-user.svg" alt="User Profile" />
+                                        src="{{ asset('/assets/frontsite/images/authenticated-user.svg') }}"
+                                        alt="User Profile" />
                                 </button>
                             </div>
                             <div x-show="profileDekstopOpen" @click.outside="profileDekstopOpen = false"
@@ -81,8 +82,9 @@
                                 tabindex="-1">
                                 <a href="#" class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100"
                                     role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                                <a href="{{ route('backsite.dashboard.index') }}"
+                                    class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100" role="menuitem"
+                                    tabindex="-1" id="user-menu-item-1">Dashboard</a>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                     class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100" role="menuitem"
@@ -143,7 +145,7 @@
                     class="{{ request()->is('/') ? 'bg-indigo-50 border-[#0D63F5] text-[#1E2B4F] block pl-3 pr-4 py-2 border-l-4 text-base font-semibold' : 'border-transparent text-[#1E2B4F] hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium' }}">Home</a>
 
                 <a href="#"
-                    class="{{ request()->is('appointment') ? 'bg-indigo-50 border-[#0D63F5] text-[#1E2B4F] block pl-3 pr-4 py-2 border-l-4 text-base font-semibold' : 'border-transparent text-[#1E2B4F] hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium' }}">Featured</a>
+                    class="{{ request()->is('Featured') ? 'bg-indigo-50 border-[#0D63F5] text-[#1E2B4F] block pl-3 pr-4 py-2 border-l-4 text-base font-semibold' : 'border-transparent text-[#1E2B4F] hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium' }}">Featured</a>
                 <a href="#"
                     class="{{ request()->is('category') ? 'bg-indigo-50 border-[#0D63F5] text-[#1E2B4F] block pl-3 pr-4 py-2 border-l-4 text-base font-semibold' : 'border-transparent text-[#1E2B4F] hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium' }}">Category</a>
                 <a href="#"
@@ -165,10 +167,10 @@
                     <div @click="profileMobilenOpen = ! profileMobilenOpen" class="flex items-center px-4 cursor-pointer">
                         <div class="flex-shrink-0">
                             <img class="h-10 w-10 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
-                                src="/src/assets/images/authenticated-user.svg" alt="" />
+                                src="{{ asset('/assets/frontsite/images/authenticated-user.svg') }}" alt="" />
                         </div>
                         <div class="ml-3">
-                            <div class="text-base font-medium text-[#1E2B4F]">Hi, Shayna</div>
+                            <div class="text-base font-medium text-[#1E2B4F]">Hi, {{ Auth::user()->name }}</div>
                             <div class="text-sm text-[#AFAEC3]">Pasien</div>
                         </div>
                     </div>
@@ -176,8 +178,8 @@
                         <a href="#"
                             class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-[#1E2B4F] hover:bg-gray-100">Your
                             Profile</a>
-                        <a href="#"
-                            class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-[#1E2B4F] hover:bg-gray-100">Settings</a>
+                        <a href="{{ route('backsite.dashboard.index') }}"
+                            class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-[#1E2B4F] hover:bg-gray-100">Dashboard</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="">
                             @csrf
                             <button type="submit"

@@ -5,16 +5,14 @@ namespace App\Http\Controllers\Backsite;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * 
-     * 
      */
-    // Validasi sudah login atau belum
+       // validasi sudah login atau belum
        public function __construct()
     {
         $this->middleware('auth');
@@ -22,12 +20,12 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('pages.backsite.dashboard.index');
+        return view('pages.backsite.management-acces.user.index');
     }
 
     /**
      * Show the form for creating a new resource.
-     *             
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()

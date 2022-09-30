@@ -4,35 +4,49 @@ namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// use library here
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
-class DashboardController extends Controller
+// use everything here
+// use Gate;
+// use Auth;
+
+// use model
+use App\Models\ManagementAcces\Role;
+use App\Models\ManagementAcces\RoleUser;
+use App\Models\ManagementAcces\Permission;
+use App\Models\ManagementAcces\PermissionRole;
+
+
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * 
-     * 
      */
+
     // Validasi sudah login atau belum
        public function __construct()
     {
         $this->middleware('auth');
     }
-
+    
     public function index()
     {
-        return view('pages.backsite.dashboard.index');
+        $permission = Permission::orderby('id','asc')->get();
+        return view('pages.backsite.management-acces.permission.index', compact('permission'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *             
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -43,7 +57,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -54,7 +68,7 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -65,7 +79,7 @@ class DashboardController extends Controller
      */
     public function edit($id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -77,7 +91,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -88,6 +102,6 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return abort(404);
     }
 }

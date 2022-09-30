@@ -5,34 +5,43 @@ namespace App\Http\Controllers\Backsite;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+//use library
+use Illuminate\Support\Facades\storage;
+use Symfony\Component\HttpFoundation\Response;
+
+// use everything here
+// use Gate;
+// use Auth;
+
+// use model
+use App\Models\MasterData\TypeUser;
+
+class TypeUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * 
-     * 
      */
-    // Validasi sudah login atau belum
+    // validasi sudah login atau belum
        public function __construct()
     {
         $this->middleware('auth');
     }
-
     public function index()
     {
-        return view('pages.backsite.dashboard.index');
+        $type_user = TypeUser::all();
+        return view('pages.backsite.management-acces.type-user.index', compact('type_user'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *             
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -43,7 +52,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -54,7 +63,7 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -65,7 +74,7 @@ class DashboardController extends Controller
      */
     public function edit($id)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -77,7 +86,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -88,6 +97,6 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+       return abort(404);
     }
 }

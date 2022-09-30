@@ -3,36 +3,59 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+// use library here
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
-class DashboardController extends Controller
+// use everything here
+use Gate;
+use Auth;
+
+// use model here
+use App\Models\Operational\Transaction;
+use App\Models\Operational\Appointment;
+use App\Models\Operational\Doctor;
+use App\Models\User;
+use App\Models\ManagementAccess\DetailUser;
+use App\Models\MasterData\Consultation;
+use App\Models\MasterData\Specialist;
+use App\Models\MasterData\ConfigPayment;
+
+class ReportTransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * 
-     * 
      */
-    // Validasi sudah login atau belum
-       public function __construct()
+        public function __construct()
     {
         $this->middleware('auth');
     }
 
     public function index()
     {
-        return view('pages.backsite.dashboard.index');
+        $type_user_condition = Auth::user()->detail_user->type_user_id;
+
+        if($type_user_condition == 1){
+            // for admin
+            $transaction = Transaction::orderBy('created_at', 'desc')->get();
+        }else{
+            // other admin for doctor & patient ( task for everyone here )
+            $transaction = Transaction::orderBy('created_at', 'desc')->get();
+        }
+
+        return view('pages.backsite.operational.transaction.index', compact('transaction'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *             
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -43,7 +66,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -54,7 +77,7 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -65,7 +88,7 @@ class DashboardController extends Controller
      */
     public function edit($id)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -77,7 +100,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -88,6 +111,6 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+       return abort(404);
     }
 }
