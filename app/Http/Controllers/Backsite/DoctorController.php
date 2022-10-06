@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 // use everything here
-// use Gate;
-// use Auth;
+use Gate;
+use Auth;
 
 // use request
 use App\Http\Requests\Doctor\UpdateDoctorRequest;
@@ -35,6 +35,7 @@ class DoctorController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('doctor_access'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         // for table grid
         $doctor = Doctor::orderBy('created_at', 'desc')->get();
         // for select 2
@@ -79,6 +80,8 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
+        // Forbodeen tidak bisa akses
+        abort_if(Gate::denies('doctor_show'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         return view('pages.backsite.operational.doctor.show', compact('doctor'));
     }
     
@@ -91,6 +94,7 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
+        abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         // for select2 = ascending a to z
         $specialist = Specialist::orderBy('name', 'asc')->get();
         return view('pages.backsite.operational.doctor.edit', compact('doctor','specialist'));
@@ -121,6 +125,7 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
+        abort_if(Gate::denies('doctor_delete'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $doctor->forcedelete();
         alert()->success('Success', 'Successfully deleted doctor');
         return back();

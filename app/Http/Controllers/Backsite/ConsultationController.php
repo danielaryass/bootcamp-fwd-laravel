@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 // use everything here
-// use Gate;
-// use Auth;
+use Gate;
+use Auth;
 
 // use request
 use App\Http\Requests\Consultation\StoreConsultationRequest;
@@ -36,6 +36,7 @@ class ConsultationController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('consultation_access'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $consultation = Consultation::all();
         return view('pages.backsite.master-data.consultation.index', compact('consultation'));
     }
@@ -75,6 +76,7 @@ class ConsultationController extends Controller
      */
     public function show(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_show'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         return view('pages.backsite.master-data.consultation.show', compact('consultation'));
     }
 
@@ -86,6 +88,7 @@ class ConsultationController extends Controller
      */
     public function edit(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_edit'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         return view('pages.backsite.master-data.config-payment.edit', compact('consultation'));
     }
 
@@ -115,6 +118,7 @@ class ConsultationController extends Controller
      */
     public function destroy(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_delete'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $consultation->forceDelete();
         alert()->success('Succes', 'Successfully delete consultation');
         return back();

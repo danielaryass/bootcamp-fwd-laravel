@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 // use everything here
-// use Gate;
-// use Auth;
+use Gate;
+use Auth;
 
 // use model
-use App\Models\ManagementAcces\Role;
-use App\Models\ManagementAcces\RoleUser;
-use App\Models\ManagementAcces\Permission;
-use App\Models\ManagementAcces\PermissionRole;
+use App\Models\ManagementAccess\Role;
+use App\Models\ManagementAccess\RoleUser;
+use App\Models\ManagementAccess\Permission;
+use App\Models\ManagementAccess\PermissionRole;
 
 // use custom request
 use App\Http\Requests\Role\StoreRoleRequest;
@@ -37,6 +37,7 @@ class RoleController extends Controller
     
     public function index()
     {
+        abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $role = Role::orderby('created_at','desc')->get();
         return view('pages.backsite.management-acces.role.index', compact('role'));
     }
@@ -50,8 +51,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $role = Role::orderBy('created_at','desc')->get();
-        return view('pages.backsite.management-acces.role.index', compact('role'));
+        return abort(404);
     }
 
     /**
@@ -78,6 +78,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
+        abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $role->load('permission');
         return view('pages.backsite.management-acces.role.show', compact('role'));
     }
@@ -90,6 +91,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $permission = Permission::all();
         $role->load('permission');
         return view('pages.backsite.management-acces.role.edit', compact('role','permission'));
@@ -123,6 +125,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         $role->forceDelete();
         alert()->success('Success','Role has been deleted');
         return back();

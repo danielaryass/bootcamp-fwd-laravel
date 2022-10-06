@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backsite;
-
+use Gate;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('dashboard_access'), Response::HTTP_FORBIDDEN,'403 Forbidden');
         return view('pages.backsite.dashboard.index');
     }
 

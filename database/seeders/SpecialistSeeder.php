@@ -18,7 +18,7 @@ class SpecialistSeeder extends Seeder
     {
         // Create data here
         $specialist = [
- [
+            [
                 'name' => 'Dermatology',
                 'price' => '250000',
                 'created_at' => date('Y-m-d H:i:s'),
