@@ -41,7 +41,7 @@ class UpdateDoctorRequest extends FormRequest
             ],
 
             'photo' => [
-                'nullable', 'string', 'max:10000'
+                'nullable', 'image', 'max:10000'
             ],
         ];
     }

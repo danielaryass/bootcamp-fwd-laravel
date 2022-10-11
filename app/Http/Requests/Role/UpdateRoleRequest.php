@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Requests\Role;
-// use Gate;
+use Gate;
 use App\Models\ManagementAcces\Role;
 use Symfony\Component\HttpFoundation\Response;
 // this rule only at update request
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class UpdateRoleRequest extends FormRequest
 {
     /**

@@ -40,7 +40,7 @@ class StoreDoctorRequest extends FormRequest
             ],
 
             'photo' => [
-                'nullable', 'string', 'max:10000'
+                'nullable', 'mimes:jpeg,svg,png', 'max:10000'
             ],
         ];
     }

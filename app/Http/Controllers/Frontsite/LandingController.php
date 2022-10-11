@@ -15,7 +15,7 @@ use Auth;
 //Model Here
 use App\Models\User;
 use App\Models\Operational\Doctor;
-use App\Models\Operational\Specialist;
+use App\Models\MasterData\Specialist;
 
 
 //thirdparty packages
@@ -33,7 +33,11 @@ class LandingController extends Controller
 
     public function index()
     {
-        return view('pages.frontsite.landing-page.index');
+        $doctor = Doctor::orderBy('created_at', 'desc')->limit(4)->get();
+       
+        $specialist = Specialist::withCount('doctor')->inRandomOrder()->limit(5)->get();
+
+        return view('pages.frontsite.landing-page.index', compact('doctor', 'specialist'));
     }
 
     /**
@@ -103,4 +107,11 @@ class LandingController extends Controller
     }
 
     // custom 
+        public function appointment($id)
+    {
+        $doctor = Doctor::where('id', $id)->first();
+        $consultation = Consultation::orderBy('name', 'asc')->get();
+
+        return view('pages.frontsite.appointment.index', compact('doctor', 'consultation'));
+    }
 }

@@ -28,10 +28,36 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         // update this section for after create user, system also create detail_user
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-        ]); 
+        // return User::create([
+        //     'name' => $input['name'],
+        //     'email' => $input['email'],
+        //     'password' => Hash::make($input['password']),
+        // ]); 
+
+          return DB::transaction(function () use ($input) {
+            return tap(User::create([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+            ]), function (User $user) {
+
+                // add to detail users
+                $detail_user = new DetailUser;
+                $detail_user->user_id = $user->id;
+                $detail_user->type_user_id = 3;
+                $detail_user->contact = NULL;
+                $detail_user->address = NULL;
+                $detail_user->photo = NULL;
+                $detail_user->gender = NULL;
+                $detail_user->save();
+
+                // add to role users - set role to patient
+                $role_user = new RoleUser;
+                $role_user->user_id = $user->id;
+                $role_user->role_id = 5;
+                $role_user->save();
+
+            });
+        });
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests\User;
-// use Gate;
+use Gate;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\FormRequest;
@@ -32,7 +32,7 @@ class StoreUserRequest extends FormRequest
             ],
             
             'email' => [
-                'required', 'email','uniques:users', 'max:255','dns'
+                'required', 'email','unique:users', 'max:255',
             ],
             'password' => [
                 'min:8','string', 'max:255', 'mixedCase'

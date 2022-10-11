@@ -11,14 +11,20 @@ use App\Http\Requests\User\UpdateUserRequest;
 
 
 use App\Http\Controllers\Controller;
+// use library here
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
+
 
 // use model here about user
 use App\Models\User;
 use App\Models\ManagementAccess\DetailUser;
 use App\Models\ManagementAccess\Permission;
 use App\Models\ManagementAccess\Role;
-use App\Models\ManagementAccess\TypeUser;
+use App\Models\MasterData\TypeUser;
 
 class UserController extends Controller
 {

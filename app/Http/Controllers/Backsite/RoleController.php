@@ -21,6 +21,9 @@ use App\Models\ManagementAccess\PermissionRole;
 // use custom request
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
+
+// use soft delete
+use Illuminate\Database\Eloquent\SoftDeletes;
 class RoleController extends Controller
 {
     /**
@@ -126,7 +129,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN,'403 Forbidden');
-        $role->forceDelete();
+        $role->Delete();
         alert()->success('Success','Role has been deleted');
         return back();
     }

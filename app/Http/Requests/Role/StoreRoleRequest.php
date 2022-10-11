@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
-// use Gate;
+use Gate;
 use App\Models\ManagementAcces\Role;
 use Symfony\Component\HttpFoundation\Response;
 // this rule only at update request

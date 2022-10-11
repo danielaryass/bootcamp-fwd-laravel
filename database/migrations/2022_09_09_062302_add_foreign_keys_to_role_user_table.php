@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('role_user', function (Blueprint $table) {
             //
-        $table->foreign('role_id','fk_role_user_to_role')->references('id')->on('role')->onUpdate('CASCADE')->onDelete('CASCADE');
-        $table->foreign('user_id','fk_role_user_to_users')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+        $table->foreignId('role_id','fk_role_user_to_role')->references('id')->on('role')->onUpdate('CASCADE')->onDelete('CASCADE');
+        $table->foreignId('user_id','fk_role_user_to_users')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
     });
     }
 

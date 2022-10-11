@@ -1,6 +1,6 @@
 <!-- BEGIN: Header-->
 <nav
-    class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light bg-info navbar-shadow">
+    class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark  navbar-shadow ">
     <div class="navbar-wrapper">
 
         <div class="navbar-header">
@@ -103,11 +103,19 @@
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
                             href="#" data-toggle="dropdown"><span
                                 class="mr-1 user-name text-bold-700">{{ Auth::user()->name }}</span><span
-                                class="avatar avatar-online"><img
-                                    src="{{ asset('/assets/frontsite/images/authenticated-user.svg') }}"
-                                    alt="avatar"><i></i></span></a>
+                                class="avatar avatar-online">
+                                @if (isset(Auth::user()->detail_user->photo))
+                                    <img src="{{ asset('storage/' . auth()->user()->detail_user->photo) }}"
+                                        alt="avatar">
+                                @else
+                                    <img src="{{ asset('/assets/frontsite/images/authenticated-user.svg') }}"
+                                        alt="avatar">
+                                @endif
+                                <i></i>
+                            </span></a>
                         <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
-                                href="user-profile.html"><i class="ft-user"></i> Edit Profile</a>
+                                href="{{ route('backsite.detail_user.index') }}"><i class="ft-user"></i> Edit
+                                Profile</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
