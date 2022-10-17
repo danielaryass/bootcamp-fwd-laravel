@@ -9,20 +9,20 @@
                 <!-- Doctor Information -->
                 <div class="flex flex-wrap items-center space-x-5">
                     <div class="flex-shrink-0">
-                        <img src="{{ asset('/assets/frontsite/images/doctor-1.png') }}"
+                        <img src="{{ url(Storage::url($appointment->doctor->photo)) }}"
                             class="w-20 h-20 rounded-full bg-center object-cover object-top" alt="Doctor 1" />
                     </div>
 
                     <div class="flex-1 space-y-1">
                         <div class="text-[#1E2B4F] text-lg font-semibold">
-                            Dr. Galih Pratama
+                            {{ $appointment->doctor->name }}
                         </div>
-                        <div class="text-[#AFAEC3]">Cardiologist</div>
+                        <div class="text-[#AFAEC3]">{{ $appointment->doctor->specialist->name ?? '' }}</div>
 
                         <!--
-                                                                Icon when mobile is show.
-                                                                star icon mobile: "flex/show", star icon dekstop: "hidden"
-                                                              -->
+                                                                                                                                                            Icon when mobile is show.
+                                                                                                                                                            star icon mobile: "flex/show", star icon dekstop: "hidden"
+                                                                                                                                                          -->
                         <div class="lg:hidden flex items-center gap-x-2">
                             <div class="flex items-center gap-2">
                                 <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
@@ -65,9 +65,9 @@
                     </div>
 
                     <!--
-                                                                Icon when desktop is show.
-                                                                star icon mobile: "hidden", star icon dekstop: "flex/show"
-                                                            -->
+                                                                                                                                                            Icon when desktop is show.
+                                                                                                                                                            star icon mobile: "hidden", star icon dekstop: "flex/show"
+                                                                                                                                                        -->
                     <div class="hidden lg:flex items-center gap-x-2">
                         <div class="flex items-center gap-2">
                             <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
@@ -114,27 +114,47 @@
                     <h5 class="text-[#1E2B4F] text-lg font-semibold">Appointment</h5>
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Kebutuhan konsultasi</div>
-                        <div class="text-[#1E2B4F] font-medium">Jantung sesak</div>
+                        <div class="text-[#1E2B4F] font-medium">{{ $appointment->consultation->name ?? '' }} </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Level</div>
-                        <div class="text-[#1E2B4F] font-medium">Medium</div>
+                        <div class="text-[#1E2B4F] font-medium">
+                            @if ($appointment->level == 1)
+                                {{ 'Low' }}
+                            @elseif ($appointment->level == 2)
+                                {{ 'Medium' }}
+                            @elseif ($appointment->level == 3)
+                                {{ 'High' }}
+                            @else
+                                {{ 'N/A' }}
+                            @endif
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Dijadwalkan pada</div>
-                        <div class="text-[#1E2B4F] font-medium">12 Januari 2022</div>
+                        <div class="text-[#1E2B4F] font-medium">{{ date('d F Y', strtotime($appointment->date)) ?? '' }}
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Waktu</div>
-                        <div class="text-[#1E2B4F] font-medium">15:30 PM</div>
+                        <div class="text-[#1E2B4F] font-medium">{{ date('H:i', strtotime($appointment->time)) ?? '' }}
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Status</div>
-                        <div class="text-[#1E2B4F] font-medium">Waiting for Payment</div>
+                        <div class="text-[#1E2B4F] font-medium">
+                            @if ($appointment->status == 1)
+                                {{ 'Payment Completed' }}
+                            @elseif ($appointment->status == 2)
+                                {{ 'Waiting Payment' }}
+                            @else
+                                {{ 'N/A' }}
+                            @endif
+                        </div>
                     </div>
                 </div>
 
@@ -145,27 +165,30 @@
                     </h5>
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Biaya konsultasi</div>
-                        <div class="text-[#1E2B4F] font-medium">$5,000</div>
+                        <div class="text-[#1E2B4F] font-medium">
+                            {{ 'IDR ' . number_format($appointment->doctor->specialist->price) ?? '' }}</div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Fee dokter</div>
-                        <div class="text-[#1E2B4F] font-medium">$200</div>
+                        <div class="text-[#1E2B4F] font-medium">
+                            {{ 'IDR ' . number_format($appointment->doctor->fee) ?? '' }}</div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Fee hospital</div>
-                        <div class="text-[#1E2B4F] font-medium">$10</div>
+                        <div class="text-[#1E2B4F] font-medium">
+                            {{ 'IDR ' . number_format($config_payment->fee) ?? '' }}</div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
-                        <div class="text-[#AFAEC3] font-medium">VAT 20%</div>
-                        <div class="text-[#1E2B4F] font-medium">$372</div>
+                        <div class="text-[#AFAEC3] font-medium">VAT {{ $config_payment->vat ?? '' }}%</div>
+                        <div class="text-[#1E2B4F] font-medium">{{ 'IDR ' . number_format($total_with_vat) ?? '' }}</div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
                         <div class="text-[#AFAEC3] font-medium">Grand total</div>
-                        <div class="text-[#2AB49B] font-semibold">$6,500</div>
+                        <div class="text-[#2AB49B] font-semibold">{{ 'IDR ' . number_format($grand_total) ?? '' }}</div>
                     </div>
                 </div>
             </div>
@@ -175,12 +198,17 @@
                 <h3 class="text-[#1E2B4F] text-3xl font-semibold leading-normal">Choose Your
                     <br />Payment Method
                 </h3>
-                <form action="" x-data="{ payment: '' }" class="mt-8">
+                <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data"
+                    x-data="{ payment: '' }" class="mt-8">
+
+                    @csrf
+
                     <!-- List Payment -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-5">
                         <div class="relative">
                             <input type="radio" name="payment" x-model="payment" value="master-card" id="master-card"
                                 class="sr-only peer" />
+
                             <label
                                 class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
                                 for="master-card">
@@ -225,17 +253,19 @@
                     </div>
 
                     <div class="mt-10 grid">
-                        <!--
-                                                                button when payment is filled.
-                                                              -->
-                        <a href="booking-success.html" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center"
-                            x-show="payment.length">
-                            Pay Now
-                        </a>
+
+                        <input type="hidden" name="appointment_id" value="{{ $id ?? '' }}">
 
                         <!--
-                                                                button when payment is empty.
-                                                              -->
+                                    button when payment is filled.
+                                    -->
+                        <button type="submit" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center"
+                            x-show="payment.length"
+                            onclick="return confirm('Are you sure want to payment this appointment ?')">Pay Now</button>
+
+                        <!--
+                                    button when payment is empty.
+                                    -->
                         <span x-show="!payment.length"
                             class="bg-[#C0CADA] text-[#808997] cursor-not-allowed px-10 py-3 rounded-full text-center">
                             Pay Now

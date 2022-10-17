@@ -95,6 +95,9 @@ Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['aut
     Route::resource('transaction', ReportTransactionController::class);
     // detail_user
     Route::resource('detail_user', DetailUserController::class);
+    // detail_user changepw
+    Route::PUT('detail_user/changepw/{id}', [DetailUserController::class, 'changepw'])->name('detail_user.changepw');
+
 
 });
 

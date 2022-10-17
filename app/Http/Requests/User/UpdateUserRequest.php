@@ -3,11 +3,11 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-// use Gate;
+use Gate;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 // this rule only at update request
-use Illuminat\Validation\Rule;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -35,12 +35,10 @@ class UpdateUserRequest extends FormRequest
                 'required', 'string', 'max:255'
             ],
             'email' => [
-                'required', 'email', 'max:255','dns', Rule::unique('users')->ignore($this->user),
+                'required', 'email', 'max:255', Rule::unique('users')->ignore($this->user),
                 // Rule unique only works for other record id
             ],
-            'password' => [
-                'min:8','string', 'max:255', 'mixedCase'
-            ],
+
             // add validation for role this here 
         ];
     }

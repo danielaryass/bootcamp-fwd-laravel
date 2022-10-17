@@ -15,9 +15,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 // use request update detail user
 use App\Http\Requests\DetailUser\UpdateDetailUserRequest;
+// rule match password
+
 
 class DetailUserController extends Controller
 {
+    use PasswordValidationRules;
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +31,7 @@ class DetailUserController extends Controller
         $user = \Auth::user()->detail_user->get();
         return view('pages.backsite.detail-user.index', compact('user'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -135,5 +139,20 @@ class DetailUserController extends Controller
     public function destroy($id)
     {
         return abort(404);
+    }
+    public function changepw(Request $request, $id)
+    {
+        $user = User::find($id);
+
+
+        $data = [
+            'password' => Hash::make($request->password),
+        ];
+
+        $user->update($data)
+            ? Alert::success('Sukses', "Password telah berhasil diubah.")
+            : Alert::error('Error', "Password gagal diubah!");
+
+        return redirect()->route('detail_user.index');
     }
 }

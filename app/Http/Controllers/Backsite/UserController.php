@@ -75,6 +75,7 @@ class UserController extends Controller
         $user = User::create($data);
         // sync roel by users select
         $user->role()->sync($request->input('role', []));
+      
 
         // save to detail user, to set type user
         $detail_user = new DetailUser();
@@ -109,12 +110,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN,'403 Forbidden');
+        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $role = Role::all()->pluck('title', 'id');
         $type_user = TypeUser::orderBy('name', 'asc')->get();
         $user->load('role');
 
-        return view('pages.backsite.management-acces.user.edit', compact('user', 'type_user', 'role'));
+        return view('pages.backsite.management-acces.user.edit', compact('user', 'role', 'type_user'));
     }
 
     /**
@@ -128,18 +130,19 @@ class UserController extends Controller
     {
         // get all request from frontsite
         $data = $request->all();
+
         // update to database
         $user->update($data);
 
-        // update role
+        // update roles
         $user->role()->sync($request->input('role', []));
-        // save to detail user, to set type user
+
+        // save to detail user , to set type user
         $detail_user = DetailUser::find($user['id']);
         $detail_user->type_user_id = $request['type_user_id'];
         $detail_user->save();
 
-        // alert succes
-        alert()->success('Success','Successfully updated user');
+        alert()->success('Success Message', 'Successfully updated user');
         return redirect()->route('backsite.user.index');
     }
 
@@ -149,7 +152,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
          abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

@@ -7,6 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+// use model typeuser
+use App\Models\ManagementAccess\DetailUser;
+// use type user
+use App\Models\MasterData\TypeUser;
+// use user
+use App\Models\User;    
+
 
 
 class DashboardController extends Controller
@@ -27,7 +34,9 @@ class DashboardController extends Controller
     public function index()
     {
         abort_if(Gate::denies('dashboard_access'), Response::HTTP_FORBIDDEN,'403 Forbidden');
-        return view('pages.backsite.dashboard.index');
+        $type_user = TypeUser::withCount('detail_user')->get();
+
+        return view('pages.backsite.dashboard.index', compact('type_user'));
     }
 
     /**
