@@ -96,8 +96,8 @@ Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['aut
     // detail_user
     Route::resource('detail_user', DetailUserController::class);
     // detail_user changepw
-    Route::PUT('detail_user/changepw/{id}', [DetailUserController::class, 'changepw'])->name('detail_user.changepw');
-
+    Route::put('change-pw/{id}', [DetailUserController::class, 'changepw'])->name('update-password');
+    Route::get('edit-pw', [DetailUserController::class, 'editpw'])->name('detail_user.editpw');
 
 });
 

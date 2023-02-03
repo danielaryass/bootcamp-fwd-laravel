@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Requests\Doctor;
-use Gate;
+
 use App\Models\Operational\Doctor;
-use Symfony\Component\HttpFoundation\Response;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreDoctorRequest extends FormRequest
 {
@@ -15,32 +16,33 @@ class StoreDoctorRequest extends FormRequest
      */
     public function authorize()
     {
-        abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN,'403 Forbidden');
+        abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function rules()
     {
         return [
+            'user_id' => [
+                'required', 'integer',
+            ],
             'specialist_id' => [
-                'required', 'integer'
+                'required', 'integer',
             ],
-
             'name' => [
-                'required', 'string', 'max:255'
+                'required', 'string', 'max:255',
             ],
-
             'fee' => [
-                'required', 'string', 'max:255'
+                'required', 'string', 'max:255',
             ],
-
             'photo' => [
-                'nullable', 'mimes:jpeg,svg,png', 'max:10000'
+                'nullable', 'mimes:jpeg,svg,png', 'max:10000',
             ],
         ];
     }

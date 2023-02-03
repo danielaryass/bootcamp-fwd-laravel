@@ -7,6 +7,8 @@ use Auth;
 use File;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 //  use model detail user
 use App\Models\ManagementAccess\DetailUser;
 // use model user
@@ -15,12 +17,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 // use request update detail user
 use App\Http\Requests\DetailUser\UpdateDetailUserRequest;
-// rule match password
+use App\Http\Requests\DetailUser\UpdatePasswordRequest;
+use App\Rules\CurrentPassword;
+
 
 
 class DetailUserController extends Controller
 {
-    use PasswordValidationRules;
+
     /**
      * Display a listing of the resource.
      *
@@ -136,23 +140,39 @@ class DetailUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+        public function destroy($id)
     {
         return abort(404);
     }
-    public function changepw(Request $request, $id)
+
+
+        public function editpw()
     {
+        return view('pages.backsite.detail-user.edit');
+    }
+     public function changepw(Request $request, $id)
+    {
+
         $user = User::find($id);
 
+        $this->validate($request, [
+           
+            'current_password' => ['required', new CurrentPassword],
+            'new_password' => 'required',
+            'confirmation_password' => 'same:new_password',
+        ]);
 
         $data = [
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->new_password),
         ];
 
         $user->update($data)
-            ? Alert::success('Sukses', "Password telah berhasil diubah.")
-            : Alert::error('Error', "Password gagal diubah!");
+            ? alert()->success('Success', 'Successfully updated information')
+            : alert()->success('Error', "Password telah gagal diubah!");
+            
+            return redirect()->back();
 
-        return redirect()->route('detail_user.index');
-    }
+    } 
+
+       
 }

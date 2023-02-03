@@ -65,7 +65,8 @@
                                             Hi, {{ Auth::user()->name }}
                                         </div>
                                         {{-- this section is type user --}}
-                                        <div class="text-sm text-[#AFAEC3]">Pasien</div>
+                                        <div class="text-sm text-[#AFAEC3]">{{ Auth::user()->detail_user->type_user->name }}
+                                        </div>
                                     </div>
                                     <img class="h-12 w-12 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
                                         src="{{ asset('/assets/frontsite/images/authenticated-user.svg') }}"

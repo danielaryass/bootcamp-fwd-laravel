@@ -123,7 +123,7 @@
                                     class="w-full h-full bg-center bg-no-repeat object-cover object-center"
                                     alt="{{ $doctor_item->name ?? '' }}">
                                 <div
-                                    class="opacity-0 group-hover:opacity-100 transition-all ease-in absolute inset-0 bg-[#0D63F3] bg-opacity-70 flex justify-center items-center">
+                                    class="opacity-0 group-hover:opacity-1  00 transition-all ease-in absolute inset-0 bg-[#0D63F3] bg-opacity-70 flex justify-center items-center">
                                     <span class="text-[#0D63F3] font-medium bg-white rounded-full px-8 py-3">Book Now</span>
                                 </div>
                             </div>
