@@ -103,10 +103,10 @@ class PaymentController extends Controller
         $transaction->save();
 
         // midtrans here
-        Config::$serverKey = config('services.midtrans.serverKey');
-        Config::$isProduction = config('services.midtrans.isProduction');
-        Config::$isSanitized = config('services.midtrans.isSanitized');
-        Config::$is3ds = config('services.midtrans.is3ds');
+        Config::$serverKey = 'SB-Mid-server-ZZZmhI4AA51D-fAp8lh2FX8l';
+        Config::$isProduction = false;
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
 
         // set all for midtrans
         $midtrans = [
